@@ -1,0 +1,156 @@
+Test Scenario Output
+
+0- (Server Not Running)
+Output: 
+	ttweetcli connecting on port 13001...
+	port error:
+	-> ttweetcli cannot currently request a connection on port 13001
+	-> [Errno 111] Connection refused
+
+1- Run Client in upload mode -- (Output: Error Message: Server Not Found -- exit gracefully)
+Output: 
+	ttweetcli connecting on port 13001...
+	port error:
+	-> ttweetcli cannot currently request a connection on port 13001
+	-> [Errno 111] Connection refused
+2- Run Client in download mode – (Output: Error Message: Server Not Found – exit gracefully)
+Output: 
+	ttweetcli connecting on port 13001...
+	port error:
+	-> ttweetcli cannot currently request a connection on port 13001
+	-> [Errno 111] Connection refused
+
+
+3- Run Server 
+
+If the server is running, 
+bound to a port and listening for client, 
+the the following will be displayed in terminal:
+ > listening for connection to ttweetcli...
+
+
+Command that was run: python3 ttweetcli.py -u 127.0.0.1 13001 "TEST"
+Server Upload Output:	
+	ttweetser connected to ('127.0.0.1', 40272)
+	received request to upload...
+	received upload: "TEST"
+	ttweetser closed connected to ('127.0.0.1', 40272)
+
+Client Upload Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL: /UP
+	ttweetser response: /OK
+	uploading message to ttweetser...
+	-> /UP - OK
+	-> message upload successful: "TEST"
+
+______________________________________________________
+
+Command that was run: ttweetcli.py -d 127.0.0.1 13001
+Server Download Output:
+	listening for connection to ttweetcli...
+	ttweetser connected to ('127.0.0.1', 40276)
+	received request to download...
+	downloading last message to ttweetcli... ('127.0.0.1', 40276)
+	"TEST"
+	ttweetser closed connected to ('127.0.0.1', 40276)
+
+Client Download Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL:  /DOWN
+	downloading message from ttweetser...
+	-> /DOWN - OK
+	-> message download successful: "TEST"
+
+______________________________________________________
+
+
+4- Run Client in download mode (Output: EMPTY Message)
+
+Command that was run: python3 ttweetcli.py -d 127.0.0.1 13001
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL:  /DOWN
+	downloading message from ttweetser...
+	-> /DOWN - OK
+	-> message download successful: "Empty Message"
+
+5- Run Client in upload mode – upload message0 > 150 characters (Output: Error, message length > 150)
+
+Command that was run: python3 ttweetcli.py -u 127.0.0.1 13001 "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	-> /UP - FAIL
+	-> message upload failed:
+	-> 150 char limit exceeded for message size
+
+6- Run Client in download mode (Output: EMPTY Message)
+
+Command that was run: python3 ttweetcli.py -d 127.0.0.1 13001
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL:  /DOWN
+	downloading message from ttweetser...
+	-> /DOWN - OK
+	-> message download successful: "Empty Message"
+
+7- Run Client in upload mode – upload message1 <= 150 characters (Output: Upload Successfully)
+
+Command that was run: python3 ttweetcli.py -u 127.0.0.1 13001 "TEST2" 
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL: /UP
+	ttweetser response: /OK
+	uploading message to ttweetser...
+	-> /UP - OK
+	-> message upload successful: "TEST2"
+
+8- Run Client in download mode (Output: message1)
+
+Command that was run: python3 ttweetcli.py -d 127.0.0.1 13001
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL:  /DOWN
+	downloading message from ttweetser...
+	-> /DOWN - OK
+	-> message download successful: "TEST2"
+
+9- Run Client in upload mode – upload message 2 (different from message1)<= 150 characters (Output: Upload Successfully)
+
+Command that was run: python3 ttweetcli.py -u 127.0.0.1 13001 "TEST different" 
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL: /UP
+	ttweetser response: /OK
+	uploading message to ttweetser...
+	-> /UP - OK
+	-> message upload successful: "TEST different"
+
+10- Run Client in download mode (Output: message2)
+
+Command that was run: python3 ttweetcli.py -d 127.0.0.1 13001
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	PROTOCOL:  /DOWN
+	downloading message from ttweetser...
+	-> /DOWN - OK
+	-> message download successful: "TEST different"
+
+11- Run Client in upload mode – upload message3 > 150 characters (Output: Error, message length > 150)
+
+Command that was run: python3 ttweetcli.py -u 127.0.0.1 13001 "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTLength " 
+	Output:
+	ttweetcli connecting on port 13001...
+	ttweetcli connected to ttweetser on port 13001
+	-> /UP - FAIL
+	-> message upload failed:
+	-> 150 char limit exceeded for message size

@@ -13,7 +13,7 @@ Files Submitted:
 	- Sample.txt
 
 Instructions for Running Client and Server
-Make sure your in the working directory where the ttweetcli and ttweetser files are stored before attempting to run either files.
+Make sure you are in the working directory where the ttweetcli and ttweetser files are stored before attempting to run either files.
 
 Note: you must run the ttweetser.py file to start up the ttweet server, before attempting to upload or download messages with ttweet client.
 
